@@ -6,11 +6,11 @@ let getToken: any = null;
 
 const http = {
 
-  setTokenFetcher(_tokenFetcher) {
-    getToken = _tokenFetcher;
-  },
-  setBaseUrl(url) {
+  setBaseUrl(url: string) {
     axios.defaults.baseURL = url;
+  },
+  setTokenFetcher(_tokenFetcher: Function) {
+    getToken = _tokenFetcher;
   },
 
   async request(data, uri: String) {
@@ -19,13 +19,11 @@ const http = {
       url: `rpc/${uri}`,
       data,
       withCredentials: true,
-      // params: { origin: "backOffice" },
       headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
     };
 
     try {
       return await axios.request(config);
-      // return axios.request({ method, url, params, headers });
     } catch (error) {
       console.log(error);
     }
