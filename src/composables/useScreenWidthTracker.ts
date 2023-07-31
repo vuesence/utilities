@@ -20,16 +20,14 @@ export function useScreenWidthTracker(breakpoints: object) {
       if (e.matches) {
         screenWidthFactor.value = breakpointArray[i][0];
         document.body.classList.add(breakpointArray[i][0]);
-      }
-      else {
+      } else {
         document.body.classList.remove(breakpointArray[i][0]);
       }
     });
     if (mediaMatch.matches) {
       screenWidthFactor.value = breakpointArray[i][0];
       document.body.classList.add(breakpointArray[i][0]);
-    }
-    else {
+    } else {
       document.body.classList.remove(breakpointArray[i][0]);
     }
     screenSizeMatches.push(mediaMatch);
