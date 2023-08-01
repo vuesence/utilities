@@ -32,20 +32,17 @@ const http = {
 
   async get(url) {
     try {
-      const response = await fetch(url)
+      return await fetch(url)
         .then(response => response.json());
-      response.data = response;
-      return response;
     } catch (error) {
       console.log(error);
     }
   },
 
   async post(uri, payload, options) {
-    const headers: any = {};
-    if (getToken()) {
-      headers.Authorization = `Bearer ${getToken()}`;
-    }
+    const headers: any = {
+      ...(getToken() && { Authorization: `Bearer ${getToken()}` }),
+    };
     const resp = await fetch(`${baseUrl}${uri}`, {
       method: "POST",
       headers,
