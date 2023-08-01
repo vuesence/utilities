@@ -47,24 +47,24 @@ async function jsonRpc(
     // const response = await axios.request(config);
     if (options?.fullResponse) {
       responseInterceptors.forEach((interceptor) => {
-        interceptor.process(response.data);
+        interceptor.process(response);
       });
       return response;
     }
 
-    if (Array.isArray(response.data)) {
-      response.data.forEach((msg: JsonRpcResponseMessage) => {
+    if (Array.isArray(response)) {
+      response.forEach((msg: JsonRpcResponseMessage) => {
         responseInterceptors.forEach((interceptor) => {
           interceptor.process(msg);
         });
       });
-      return response.data;
+      return response;
     } else {
       responseInterceptors.forEach((interceptor) => {
-        interceptor.process(response.data);
+        interceptor.process(response);
       });
-      if (response.data.result) {
-        return response.data.result.data;
+      if (response.result) {
+        return response.result.data;
       }
     }
   } catch (error) {

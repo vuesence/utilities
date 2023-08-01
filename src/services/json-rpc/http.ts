@@ -1,6 +1,3 @@
-// import axios from "axios";
-
-// const auth: any = null;
 let getToken: any = null;
 
 let baseUrl = "";
@@ -8,41 +5,27 @@ let baseUrl = "";
 const http = {
 
   setBaseUrl(url: string) {
-    // axios.defaults.baseURL = url;
     baseUrl = url;
   },
   setTokenFetcher(_tokenFetcher: Function) {
     getToken = _tokenFetcher;
   },
 
-  async request(data, uri: String) {
-    // const config: AxiosRequestConfig = {
-    //   method: "POST",
-    //   url: `rpc/${uri}`,
-    //   data,
-    //   withCredentials: true,
-    //   headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
-    // };
-
-    // try {
-    //   return await axios.request(config);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  async request(data: any, uri: string) {
     const headers: any = {
       "Content-Type": "application/json",
+      ...(getToken() && { Authorization: `Bearer ${getToken()}` }),
     };
-    if (getToken()) {
-      headers.Authorization = `Bearer ${getToken()}`;
-    }
-    const resp = await fetch(`${baseUrl}rpc/${uri}`, {
+
+    const response = await fetch(`${baseUrl}rpc/${uri}`, {
       method: "POST",
       headers,
       credentials: "include",
       body: JSON.stringify(data),
-    }).then(response => response.json());
-    // console.log(resp);
-    resp.data = resp;
+    });
+
+    const resp = await response.json();
+    // resp.data = resp;
 
     return resp;
   },
@@ -59,9 +42,7 @@ const http = {
   },
 
   async post(uri, payload, options) {
-    // return axios.post(url, payload, options);
     const headers: any = {};
-    // const headers: any = options.headers;
     if (getToken()) {
       headers.Authorization = `Bearer ${getToken()}`;
     }
