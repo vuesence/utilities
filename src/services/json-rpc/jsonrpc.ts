@@ -12,6 +12,7 @@ import http from "./http";
 let jsonCounter = 0;
 let logout;
 let isBost = false;
+let extra = null;
 
 const responseInterceptors = [];
 
@@ -25,6 +26,9 @@ const jsonrpc = {
   },
   setBost(_isBost) {
     isBost = _isBost;
+  },
+  setExtraParams(_extra) {
+    extra = _extra;
   },
 
 };
@@ -104,6 +108,11 @@ function buildRequestMessage(
   }
   if (isBost) {
     message.params.bost = true;
+  }
+  if (extra) {
+    for (const key in extra) {
+      message.params[key] = extra[key];
+    }
   }
   return message;
 }
