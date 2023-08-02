@@ -11,8 +11,9 @@ import http from "./http";
 
 let jsonCounter = 0;
 let logout;
-let isBost = false;
-let extra = null;
+// let isBost = false;
+let extraParams = null;
+let getToken = null;
 
 const responseInterceptors = [];
 
@@ -24,11 +25,11 @@ const jsonrpc = {
   setLogoutCallback(_logout) {
     logout = _logout;
   },
-  setBost(_isBost) {
-    isBost = _isBost;
+  setExtraParams(_extraParams) {
+    extraParams = _extraParams;
   },
-  setExtraParams(_extra) {
-    extra = _extra;
+  setTokenCallback(_tokenFetcher: Function) {
+    getToken = _tokenFetcher;
   },
 
 };
@@ -97,23 +98,12 @@ function buildRequestMessage(
   const message: JsonRpcRequestMessage = {
     jsonrpc: "2.0",
     method: payload.method,
-    params: payload.params,
-    // params: payload.params ?? { origin: String },
+    params: payload.params || {},
   };
-  if (options?.isNotification !== true) {
+  if (!options?.isNotification) {
     message.id = payload.id ?? jsonCounter++;
   }
-  if (!message.params) {
-    message.params = {};
-  }
-  if (isBost) {
-    message.params.bost = true;
-  }
-  if (extra) {
-    for (const key in extra) {
-      message.params[key] = extra[key];
-    }
-  }
+  Object.assign(message.params, extraParams, { token: getToken() });
   return message;
 }
 
