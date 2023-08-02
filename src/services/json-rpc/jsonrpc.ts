@@ -15,15 +15,19 @@ let isBost = false;
 
 const responseInterceptors = [];
 
-function addResponseInterceptor(interceptor) {
-  responseInterceptors.push(interceptor);
-}
-function setLogoutCallback(_logout) {
-  logout = _logout;
-}
-function setBost(_isBost) {
-  isBost = _isBost;
-}
+const jsonrpc = {
+
+  addResponseInterceptor(interceptor) {
+    responseInterceptors.push(interceptor);
+  },
+  setLogoutCallback(_logout) {
+    logout = _logout;
+  },
+  setBost(_isBost) {
+    isBost = _isBost;
+  },
+
+};
 
 /**
  * Executes a JSON-RPC request and returns the response data.
@@ -78,7 +82,6 @@ async function jsonRpc(
     }
   }
 }
-
 /**
  * Builds a JSON-RPC request message from the given payload and options.
  *
@@ -128,6 +131,13 @@ function buildUri(
   }
 }
 
+// export function _jsonRpc(
+//   payload: JsonRpcPayload | Array<JsonRpcPayload>,
+//   options?: JsonRpcPayloadOptions,
+// ) {
+//   return jsonrpc.jsonRpc(payload, options);
+// }
+
 export {
   type JsonRpcPayloadOptions,
   type JsonRpcPayload,
@@ -135,7 +145,6 @@ export {
   type JsonRpcRequestMessage,
   type JsonRpcResponseMessage,
   jsonRpc,
-  addResponseInterceptor,
-  setLogoutCallback,
-  setBost,
 };
+
+export default jsonrpc;
