@@ -4,7 +4,8 @@ interface JsonRpcMessage {
 interface JsonRpcRequestMessage extends JsonRpcMessage {
   id?: number | string
   method: string
-  params?: object
+  // params?: object
+  params?: Record<string, any>
 }
 interface JsonRpcResponseMessage extends JsonRpcMessage {
   /**

@@ -11,6 +11,7 @@ import http from "./http";
 
 let jsonCounter = 0;
 let logout;
+let isBost = false;
 
 const responseInterceptors = [];
 
@@ -19,6 +20,9 @@ function addResponseInterceptor(interceptor) {
 }
 function setLogoutCallback(_logout) {
   logout = _logout;
+}
+function setBost(_isBost) {
+  isBost = _isBost;
 }
 
 /**
@@ -95,7 +99,9 @@ function buildRequestMessage(
   if (!message.params) {
     message.params = {};
   }
-  // (message.params as Record<string, string>).origin = "backOffice";
+  if (isBost) {
+    message.params.bost = true;
+  }
   return message;
 }
 
@@ -131,4 +137,5 @@ export {
   jsonRpc,
   addResponseInterceptor,
   setLogoutCallback,
+  setBost,
 };
