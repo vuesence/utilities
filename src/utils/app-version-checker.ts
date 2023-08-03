@@ -14,6 +14,7 @@ export async function checkVersion(localStorageName: string) {
     // window.location.href = "/?";
     // window.location.href = `${window.location.href}?update`;
     console.log("reloaded");
+    throw new Error("error on update");
   } else {
     console.log("no updates");
   }
