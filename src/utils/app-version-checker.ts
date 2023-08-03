@@ -10,7 +10,8 @@ export async function checkVersion(localStorageName: string) {
     console.log("updating version");
     console.log("new version:", buildData.date);
     localStorage.setItem(localStorageName, buildData.date);
-    window.location.href = "/?";
+    window.location.reload();
+    // window.location.href = "/?";
     // window.location.href = `${window.location.href}?update`;
     console.log("reloaded");
   } else {
