@@ -1,3 +1,7 @@
+// XHR version
+
+// https://github.com/mama-srl/helper-xhr
+
 let getToken: any = null;
 
 let baseUrl = "";
