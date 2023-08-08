@@ -4,7 +4,7 @@ import type {
   JsonRpcPayloadParams,
   JsonRpcRequestMessage,
   JsonRpcResponseMessage,
-} from "./jsonrpc-types";
+} from "./jsonrpc.interfaces";
 import http from "./http";
 
 // import { useAuth } from "@/user-account/composables/useAuth.js";
@@ -28,7 +28,7 @@ const jsonrpc = {
   setExtraParams(_extraParams) {
     extraParams = _extraParams;
   },
-  setTokenCallback(_tokenFetcher: Function) {
+  setTokenCallback(_tokenFetcher) {
     getToken = _tokenFetcher;
   },
 

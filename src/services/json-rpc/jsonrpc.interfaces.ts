@@ -51,7 +51,7 @@ interface JsonRpcPayload {
 }
 
 interface JsonRpcPayloadParams {
-  [key: string]: String | Number | Object
+  [key: string]: string | number | object
 }
 
 interface JsonRpcPayloadOptions {
