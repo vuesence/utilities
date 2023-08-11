@@ -22,9 +22,9 @@ const http = {
   async requestXhr(data: any, uri: string) {
     const xhr = new HttpRequest("POST", `${baseUrl}rpc/${uri}`, "application/json");
     xhr.xhr.withCredentials = true;
-    if (getToken()) {
-      xhr.setRequestHeader("Authorization", `Bearer ${getToken()}`);
-    }
+    // if (getToken()) {
+    //   xhr.setRequestHeader("Authorization", `Bearer ${getToken()}`);
+    // }
     const response = await xhr.send(data);
     return response.json;
   },
