@@ -1,7 +1,7 @@
 // import axios from "axios";
 // import type { AxiosRequestConfig } from "axios";
 
-import HttpRequest from "./helper-xhr";
+import HttpRequest from "./http-xhr";
 
 let getToken: any = null;
 let baseUrl = "";
