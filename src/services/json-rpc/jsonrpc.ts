@@ -7,14 +7,9 @@ import type {
 } from "./jsonrpc.interfaces";
 import http from "./http";
 
-// import { useAuth } from "@/user-account/composables/useAuth.js";
-
 let jsonCounter = 0;
 let logout;
-// let isBost = false;
-// let extraParams = null;
-let getToken = null;
-let metaData = {};
+let metaDataCallback = () => {};
 
 const responseInterceptors = [];
 
@@ -26,15 +21,8 @@ const jsonrpc = {
   setLogoutCallback(_logout) {
     logout = _logout;
   },
-  // setExtraParams(_extraParams) {
-  //   extraParams = _extraParams;
-  // },
-  setTokenCallback(_tokenFetcher) {
-    getToken = _tokenFetcher;
-  },
-
-  setMetaData(_metaData) {
-    metaData = _metaData;
+  setMetaDataCallback(_metaDataCallback) {
+    metaDataCallback = _metaDataCallback;
   },
 
 };
@@ -109,10 +97,11 @@ function buildRequestMessage(
   if (!options?.isNotification) {
     message.id = payload.id ?? jsonCounter++;
   }
-  message.params.meta = {
-    ...metaData,
-    at: getToken(),
-  };
+  message.params.meta = metaDataCallback();
+  // message.params.meta = {
+  //   ...metaData,
+  //   at: getToken(),
+  // };
   // Object.assign(message.params, { meta: {...metaData, { token: getToken() }});
   return message;
 }
